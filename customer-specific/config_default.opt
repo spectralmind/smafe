@@ -1,0 +1,73 @@
+# generic config file 
+# 2011-03-22: only 10 tracks returned
+
+# You can include comments like this
+# Note that the # must be in the first column of the line!
+--skipin
+1
+--skipout
+1
+--stepwidth
+1
+--returnSegmentFeatures
+0
+--transformDecibel
+1
+--transformSone
+1
+--modAmplLimit
+60
+--bIncludeDC
+0
+--shNumBarkBands
+24
+--bExtractRP
+0
+--bExtractRH
+0
+--bExtractSSD
+1
+--bExtractTRP
+0
+--bExtractTRH
+0
+--bExtractTSSD
+0
+--bExtractTIMEDOM
+0
+--bExtractSPECTRAL
+0
+--bFlucSW
+1
+--bBlurring1
+0
+--bBlurring2
+0
+# smui is not used here
+--codebook=<none>
+# performance 
+--topk=10
+# verbose
+--verbosity
+3
+# dist types
+# only L1 distance
+--disttypes
+2
+# the destination for the files
+# empty means: do not move file
+# - means: delete file
+#--filedest=
+# Passphrase. Empty: no encryption
+--passphrase=default
+# limits the number of **file** records
+--limittrackscount=300000
+#--help
+#
+# These are additional command line parameters for the daemons
+# Fix parameters:
+#	- smafewrapd: --dbconf=<dbfile> (will be replaced at smafesetup.sh)
+#	- smafedistd: --jobs --dbconf=<dbfile> (will be replaced at smafesetup.sh)
+# the rest of the line after the first space is taken and written to smafed.conf
+###_smafewrapd-params --id=smafedbwrap
+###_smafedistd-params --id=smafedbdist

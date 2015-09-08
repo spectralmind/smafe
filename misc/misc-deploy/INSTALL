@@ -1,0 +1,161 @@
+--------------------------------------------------------------------
+----	Installation
+--------------------------------------------------------------------
+----	Spectralmind Gbmh
+----	(c) 2008-2012
+----	support@spectralmind.com
+--------------------------------------------------------------------
+
+
+
+--	Quick guide
+----------------------------------------------------------------------------
+
+
+Required:
+	- Installed and runnning Postgres SQL server 8.3 or greater
+	- Postgres user (login and password) with right to create roles and databases
+	- (Optional) sudo right to
+			- install packages via apt-get
+			- install init.d and rc.d script  (compatible platforms only)
+			- install and configure SMINT API (compatible platforms only)
+
+
+Install: 
+
+$ ./smafesetup <postgres-host> <postgres-admin-user> <postgres-admin-user-password> <database-name> <pg-password-smafeadmin> <pg-password-smafeuser> [<postgres port>  [<tablespace name>]]"
+
+
+- <postgres-host> 			the host where postgres is running (localhost if local database server is used)
+- <postgres-admin-user> 	an postgres admin user that has the right to create roles
+- <postgres-admin-password> the password for that admin user
+- <database-name> 			the name for the (new) database where the similarity model is stored (freely choosable)
+- <pg-password-smafeadmin> 	the new password for the internal user for read-write-access (freely choosable)
+- <pg-password-smafeuser> 	the new password for the internal user for read-access  (freely choosable)
+- <postgres port>	 		(optional) port for postgres server (default 5432)
+- <tablespace name>	 		(optional) postgres tablespace name where working database will be created. Note that that temporary test database will always be created in the default tablespace.  (default pg_default)
+
+
+Example call:
+$ ./smafesetup localhost admin adminpwd smafedb smafeadmin12 smafeuser12
+
+
+NOTE: currently, the postgres port specified must be the standard postgres port, 5432.
+
+
+--	Introduction
+----------------------------------------------------------------------------
+
+The Smafe package consists of two tar files. 
+
+smafedeploy.tar.bz2 contains the actual executables, Smafe shared libraries, Intel Integrated Performance Primitives libraries and resource files.
+
+smafedeploytar-libs.bz2 contains third-party libraries that are used by Smafe. Some of these libraries might be available on the system. If this is not the case, you can either install them or you can use the shared object files contained in this archive.
+
+This version of Smafe uses PostgreSQL for data persistance which is assumed to be installed.
+
+
+
+--	Complete Setup
+----------------------------------------------------------------------------
+
+The script smafesetup.sh performs a typical installation, making use of the libraries shipped with Smafe. Smafesetup does not install any libraries to the system's default library locations. All libraries that are shipped with the package remain inside the smafe installation folder.
+
+Smafesetup does, however, use the system's package management system (apt-get) to install optional dependencies for
+- the support of other file types than wav and mp3, and
+- SMINT API. 
+
+When you call the script you specify one Postgres role that has the right to login and create roles ("database administrator"), as well as the hostname for the postgres installation, the database name to be created, and the passwords for the two roles that are used in conjection with Smafe. 
+
+Before the actual setup of the working database the script performs some self-tests to detect common problems. If a test fails the script exits. In this case please contact us: support@spectralmind.com. 
+
+If the setup finishes without error a ready-to-be-used database has been created, configured with customer specific options.
+
+If the database already exists you will be prompted to delete the old database or skip the step.
+
+Optionally, setup installs a init script into /etc/init.d and creates symlinks in /etc/rc?.d. This requires sudo rights and can be skipped. This follows the System V convention as implemented in, eg., Debian.
+
+NOTE: If you execute the setup more than once make sure you do not change database password parameters or the install folder. If in doubt, rather uninstall init scripts before. 
+
+
+
+--	New Database (Advanced topic)
+----------------------------------------------------------------------------
+
+For the typical use case it is not necessary to create additional databases.
+
+If you want to create a new smafe database after the initial installation please follow these steps:
+
+- Start smafesetup with appropriate parameters (see above).
+- smafesetup will recognize that you have already performed initial setup and offer you a number of options how to continue
+- Choose "2 - Test installation and (re-)create database and database config files" by entering a "2".
+- If the database already exists you will be prompted to delete the old database or skip the step.
+- Optionally, setup installs a init script into /etc/init.d and creates symlinks in /etc/rc?.d. This requires sudo rights and can be skipped. This follows the System V convention as implemented in, eg., Debian. 
+
+NOTE: if you choose to install init.d scripts to control smafe those scripts will make use of the _new_ database, not any previous one. 
+
+
+
+
+--	Libraries / Dependecies
+----------------------------------------------------------------------------
+
+
+--	Supported platforms
+
+Currently, the following operating systems are supported:
+
+- Debian 5
+- Ubuntu 8.04 LTS to 10.04 LTS
+
+Init scripts installation have been tested with:
+
+- Ubuntu 10.04
+- Ubuntu  9.10
+- Ubuntu  8.10
+
+
+--  Library dependecies
+
+* argtable (>= 9-1) - A library for parsing GNU style command line arguments
+
+* boost-filesystem, boost-serialization, boost-smartptr, boost-system (== 1.35 !)
+Version 1.35 supported only!
+
+* Intel Performance Primitives (IPP) (>= 5.3.4)
+
+* mpg123 (>=1.10.1)
+
+* postgres / libpq (>= 8.3)
+
+* crypto++ (>= 5.5.2)
+
+Note that these libraries are shipped with Smafe and are installed locally only, ie, not in the system's library directory (/usr/lib).
+
+
+--  Other dependencies
+
+These dependencies are installed via the package management system apt-get, if available.
+
+To run SMINT API:
+* apache2
+* php5
+* php5 - postgres bridge
+
+To process file formats other than wav and mp3:
+* ffmpeg
+
+
+
+
+
+--	Uninstall
+----------------------------------------------------------------------------
+
+To uninstall smafe you can perform these steps:
+
+- Drop database (name has been given at setup time)
+- Delete init scripts and symlinks:
+$ sudo rm -rf /etc/init.d/smafed*
+$ sudo update-rc.d smafed remove
+- Delete folder with smafe files (the folder where you have copied smafe to before install) 

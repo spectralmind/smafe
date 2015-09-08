@@ -1,0 +1,6 @@
+#This is an example of an option file for smafewrap
+# calls help for arguments
+
+# You can include comments like this
+# Note that the # must be in the first column of the line!
+--help

@@ -1,0 +1,69 @@
+#Config file for tests
+
+# You can include comments like this
+# Note that the # must be in the first column of the line!
+--skipin
+1
+--skipout
+1
+--stepwidth
+2
+# do not return segment features for this test becase the output is text file and this cannot be combined
+--returnSegmentFeatures
+0
+--transformDecibel
+1
+--transformSone
+1
+--modAmplLimit
+60
+--bIncludeDC
+0
+--shNumBarkBands
+24
+# do not change (testDistd expects 7 fv types)
+--bExtractRP
+1
+--bExtractRH
+1
+--bExtractSSD
+1
+--bExtractTRP
+0
+--bExtractTRH
+1
+--bExtractTSSD
+1
+--bExtractTIMEDOM
+1
+--bExtractSPECTRAL
+1
+--bFlucSW
+1
+--bBlurring1
+0
+--bBlurring2
+0
+--codebook=<none>
+--topk=100
+# verbose
+--verbosity
+1
+# dist types
+# do not change (testDistd)
+--disttypes
+1
+--disttypes
+2
+--disttypes
+3
+# do not change
+# empty means: do not move file
+# - means: delete file
+--filedest=/tmp/
+# do not change
+#no password for this test
+#--passphrase=supersecret
+# do not change (testWrap.sh expects a limit of 5)
+--limittrackscount=5
+#--help

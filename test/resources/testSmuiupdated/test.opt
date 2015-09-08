@@ -1,0 +1,65 @@
+#Config file for smuiupdated test
+# Most of the options do not matter. Only those marked with ***
+
+# You can include comments like this
+# Note that the # must be in the first column of the line!
+--skipin
+0
+--skipout
+0
+--stepwidth
+5
+--returnSegmentFeatures
+0
+--transformDecibel
+1
+--transformSone
+1
+--modAmplLimit
+60
+--bIncludeDC
+0
+--shNumBarkBands
+24
+--bExtractRP
+0
+--bExtractRH
+0
+--bExtractSSD
+0
+--bExtractTRP
+1
+--bExtractTRH
+1
+--bExtractTSSD
+1
+--bExtractTIMEDOM
+1
+--bExtractSPECTRAL
+0
+--bFlucSW
+1
+--bBlurring1
+0
+--bBlurring2
+0
+# ***
+--codebook=../test/resources/testSmuiupdated/testSmuiupdated.2.map
+# ***
+--bubblerangefactor
+1
+--topk=5
+# verbose
+--verbosity
+1
+# dist types
+--disttypes
+1
+--disttypes
+2
+# ***
+# we delete the files, it is easier for the test script
+--filedest=-
+# ***
+--passphrase=supersecret
+#--help

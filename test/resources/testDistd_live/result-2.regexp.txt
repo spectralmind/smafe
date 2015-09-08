@@ -1,0 +1,1 @@
+track_id,segment_id,distance|2,0,62.[0-9e\.\-]+|2,1,62.[0-9e\.\-]+|

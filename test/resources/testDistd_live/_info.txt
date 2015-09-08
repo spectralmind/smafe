@@ -1,0 +1,77 @@
+
+(decryption with std passphrase)
+
+==file telnet-input-1.txt==
+
+=1.35=
+encrypted:
+aigdqR81Yp2HjBX84HZbUwwDYJJO/wbEW/FQZD9D/rGzcSIv9b1eOsLUjPClFyd83DFaNqV/ 7i+xKqjH+zD5CG9vrKWdja4xZCtVVZP+G0/eYtSU9P4GzbyL7UlvM7YkN99a3bYmYmdpCwzD rkmflgV7WtoD47Fu4rW6swrCXiouW0Qhzogeeg35e3vJ1bMjNqo0fdMTvqBZlEEAzzT94D5C GP75hXVzAGRE9x44KV4BV3zF4ifFSQNTCM2uBxrFSoR5wlVu1ZoBMbUpnoLzIw4WqM7AWxjR mV6rN8WWdXGCddlfB0e+3m5poeDH6krqmQgjUk2NIV/ioEGoanIzst1lSK3xMgILT1M9yRBu j4nZisms/NBZ/eAS+hLXWbnnXZikb3qOkykKqfcc5jg2V1FHmDya2/OUCUHYn7KcWMGDlbBV 4HL+avNPs2cvWqDal2VLR+zU1qz+IMxcvWsIyaqGIOjECcXJmwIgcDbr5DWjxvF3jvNlttIQ qOzPJtQEq6eY3piS5gDwLcjVhey4RzlkpBXwntGHKSx80BSt7DycMxKqRps7gSFDwVArcrsJ Mwd1GkE2mt5XC45+83iH8EWw4Ttf2i5DbuyeKyJOWXlir4nceNvJTfPlREWJgXSAXIwbouOA TwDJ19XfZDWBPQ6yU1TCYtxUT6fiudZbtuRcB9qMix9fDwQ77RXR6lR4U87+YRZTtYR8X6C2 Zo0KUihKz2EvuOHQimqjB/uW+QjxqOk46rzk/QfpnHRh0gd89JomVGZ4zfOuIlnWmkrSfeJ4 UE0HtNEqZDBU8TvXWVPVtKwwYlbWka5lhe9PGTrTWniTzRLw6OM171F8Cz0U10LhM/I9cNHC kucPaEcayl27V0jr+Vi2UTL7L6yda+LeTgOjfri2MfIl/PmnILeAeWO+zjY01e4VdcLFjArV hSjWGABT9f0/OPTeC+3XUp2K7XU5DvFUdzpIkjiGY368ii6UX2fErH41F+byaEBnknwovkWj QPP9scCIVmlqytO63JjKFM2TUQ3PNAxqeaIAMJzeH/5OVCieOdtL8E8NU2MgHwI5xuGKxuT1 xcYOXdL3bla4FWcb1w9TT5wP8k3r187omMJ2JNxVlAhzOR5VusR4k7YYJFv+nN7DIkHENe9A 3s/pIlSJI2h/eJlxnrHxb3O380nT8dSQv4dJbkLl9akp4KZ+SSBgeJ2gffj2xBZ5jSlTYIcM wFaoKbzSIpRtq+vYI2waGB/AlbEMh3ryFTdNNmLIOC4r3GPDOMyJiqWCfucUDK2QTrk4gU2n SAK2B5WD5ZLLcWn/d7A/dPTE/BqMTyYbS1Db9MpQoHB6LS2siHivwnxqUXLSQIsJsyLTkx4U sWbrQUmm1jTJxtotaQxFVcurF1AdPVEpt9MHxWgF/3kock6LfCzIAQIlUpVScRRBwvHGBXMR K+65OYFWxMUccbhx4/3Z0BHVV1sn4oKsrBW4jl+rvdlxWqZJuM5HIGpYYuHbeoH4fGo58+vo w8coutezqxZghESw7PkpeiULx7kV8E1DiKgpsmElz2ypFLh1WMNs16UuZ7LhHWLSgD7jO6+n OiH4nDvB4dXg9X5fBY+OxnMeuoLmiq3XMncJegjRfHrCQHqm1Q/wCYTzp9wXFhuUzHb0ynDz OO8KfNJ2luTeTUK+hSfgw1RJoqrN2Q==
+
+decrypted:
+22 serialization::archive 4 1 0
+0 1 25 SmafeNumericFeatureVector 1 0
+1 0 0 60 0.77821465983620441 1.0002926675121555 0.79437957941335102 0.72081181538894712 0.64308868119477614 0.55016585466747825 0.57194482023260851 2.3882484255411991 4.0074676321461187 7.3466731075773977 2.8048090225809079 1.549077753317448 0.85259528807739737 0.78126378802939567 0.82136798285514923 0.50400939579738435 1.1656365968433977 2.7915954356606445 5.3944307399233633 3.2190608595801029 3.1773021600894298 1.2849265740846911 1.2827060487916868 0.87011172833160988 1.0584739755789585 0.54251865162069113 2.3910926327280486 2.2563884764829218 4.1281780643356027 3.0809227975723146 2.0056102574332813 0.59346091600729101 1.0626122147676822 0.8300782865022216 1.2148542332954069 0.87671935065273154 2.8741872582638259 1.4739492035228812 1.7949613611232578 3.8914596452932324 0.70148267670190823 0.96938400060545826 1.4472938389236543 0.73716777378676368 1.1684950574437563 1.7365348891300036 2.1549411912694167 1.484357727420567 1.1182047518913265 2.994802552453232 0.82836030507260161 0.92284118226498291 1.8910221470313213 0.91459043548163632 0.85148503714013302 2.0342978267065743 0.60311969021228906 1.4010772941957943 2.2461749682930803 1.3774450428980487 100 2
+
+
+
+
+==file result-GETOPTS.reference.txt==
+
+=1.35=
+
+encrypted:
+foEgNiJjkKq4axv7K81jQLBFdWXTk0kbTOtgixuJLfzah7ow+GPSI0Rwv5u8sMprIPj1e0rK MbgqcGYxc3DaSrRG+w8zRJorJsIdGZ7kfiXJk8xFggBrfulaZzrYJPCFjqtBwVsJkT2BcaRP snEoLxNg7wArSpl0cHWY6JqCSw9KDGxdfznkXNYkWNVErVcX3dBz8W4O97PCkgGLzULUJ0aU dwuUXN36Oegv9646JVGFFT5jLNejEzbMjDBgn+VJaQ1GNHXckxW4NEHAh/peGQ==
+
+decrypted:
+22 serialization::archive 4 0 1 0
+0 1 1 2 1 1 1 60 0 24 1 0 0 5 /tmp/ 1 1 2 100 6 <none> 0.5 0 0 9 0 0 0 2 RH 1 2 RP 0 8 SPECTRAL 0 3 SSD 0 6 Somlib 0 7 TIMEDOM 0 3 TRH 0 3 TRP 0 4 TSSD 0
+
+
+=1.47=
+encrypted:
+XhXvQ92sQu5x3CD6x7nZTiaEu+XD9DXbQCXU3UxnHPyWpM+XlP9dJo00j8WWOm4Uu1o6/lcF hZdZFwJ4g4bC3cjhwZ3Is4DCfyqBDBFy95a8DmmquwqqsRLKz42fsxWJsNkgiwry3B/XDHKQ n/B0VDsekuvfVi6xbPck3pnR8GI4smpXaWmiWwpUNFl2kGkV6CBDlbVotEwRwWgyrAUwrPTM xuVOfx4CFSJY/wkYvmIZ4J6P9rQNwCOVwf1PCCeiiHo9gdAmB8cZXIBzxb953i9GOtmhKBUW
+
+
+decrypted
+22 serialization::archive 9 0 1 2
+0 1 1 2 1 0 1 1 60 0 24 1 0 0 5 /tmp/ 1 1 0 2 100 6 <none> 0.5 0 0 9 0 0 0 2 RH 1 2 RP 0 8 SPECTRAL 0 3 SSD 0 6 Somlib 0 7 TIMEDOM 0 3 TRH 0 3 TRP 0 4 TSSD 0 0
+
+
+
+
+
+==Recreate resource files==
+
+1) data.dump.sql
+
+	-create deploy package
+	$ cd misc && ./mkdeploy.sh ../test/resources/testDistd_live/test.opt
+	
+	-setup db
+	$ ./smafesetup.sh localhost smafeadmin FEP13pipers testres FEP13pipers papa
+	
+	-add jobs for three files: testsmall, testthird, testsmall10percent_faster
+	$ rm jobs.sql
+	$ ./mkjobs.sh "$(readlink -f ../test/resources/testsmall.mp3)" >> jobs.sql
+	$ ./mkjobs.sh "$(readlink -f ../test/resources/testthird.mp3)" >> jobs.sql
+	$ ./mkjobs.sh "$(readlink -f ../test/resources/testsmall10percent\ faster.mp3)" >> jobs.sql
+	$ cat jobs.sql |  psql -h localhost  testres
+	
+	-start wrapd
+	$ cd build4deploy
+	$ ./smafewrapd/smafewrapd --dbconf ../deploy-packages/test.opt-1.3.821823M/config/smafedbconn-localhost-testres-smafeuser.opt --id=testres --no-daemon
+				(stop with ctrl-c when processing is finished)
+	
+	- music files have been moved, move back:
+	$ mv /tmp/test* ../test/resources/
+	
+	-get dump
+	$ pg_dump -h localhost testres > data.dump.sql
+	
+	-edit dump: use editor to remove all but COPY commands and edit two things (see old dump file as example)
+		-insert testcollection
+		-insert collection-file record
+		-insert featurevectorsegment recors (5 copies of last record, increment segmentnr)
+	
+	
+	

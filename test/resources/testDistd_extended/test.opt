@@ -1,0 +1,59 @@
+#Config file for testDistd_extended test
+# ! Important note: if you edit this file, you must manually create the sql file
+# ! and edit contents.sql !
+
+# You can include comments like this
+# Note that the # must be in the first column of the line!
+--skipin
+0
+--skipout
+0
+--stepwidth
+5
+--returnSegmentFeatures
+0
+--transformDecibel
+1
+--transformSone
+1
+--modAmplLimit
+60
+--bIncludeDC
+0
+--shNumBarkBands
+24
+--bExtractRP
+0
+--bExtractRH
+1
+--bExtractSSD
+0
+--bExtractTRP
+0
+--bExtractTRH
+0
+--bExtractTSSD
+0
+--bExtractTIMEDOM
+0
+--bExtractSPECTRAL
+0
+--bFlucSW
+1
+--bBlurring1
+0
+--bBlurring2
+0
+--codebook=<none>
+--topk=5
+# verbose
+--verbosity
+1
+# dist types
+--disttypes
+1
+--disttypes
+2
+--filedest=/tmp/
+--passphrase=yabbadabbado
+#--help

@@ -1,0 +1,62 @@
+#Config file for live calculation test (only one distance type!)
+# 2011-12-14 EP: added encryption
+
+# You can include comments like this
+# Note that the # must be in the first column of the line!
+--skipin
+1
+--skipout
+1
+--stepwidth
+2
+--returnSegmentFeatures
+1
+--transformDecibel
+1
+--transformSone
+1
+--modAmplLimit
+60
+--bIncludeDC
+0
+--shNumBarkBands
+24
+# do not change (only one type)
+--bExtractRP
+0
+--bExtractRH
+1
+--bExtractSSD
+0
+--bExtractTRP
+0
+--bExtractTRH
+0
+--bExtractTSSD
+0
+--bExtractTIMEDOM
+0
+--bExtractSPECTRAL
+0
+--bFlucSW
+1
+--bBlurring1
+0
+--bBlurring2
+0
+--codebook=<none>
+--topk=100
+# verbose
+--verbosity
+1
+# dist types
+# do not change (only one)
+--disttypes
+2
+# do not change
+# empty means: do not move file
+# - means: delete file
+--filedest=/tmp/
+# do not change
+--passphrase=supersecret5?
+#--help

@@ -1,0 +1,276 @@
+============================================================================
+==
+==	INSTALL.txt
+==	2009-07
+==	(c) spectralmind
+==
+==	This document explains how to compile smafe.
+==
+============================================================================
+==
+==	Contents
+==
+==	I)   Introduction
+==	II)  Dependencies
+==	III) Autoreconf / Configure / Make
+==	IV)  Tests
+==	V)   Platform specific issues
+==	VI)  Database setup
+==	
+==	A) 
+==
+============================================================================
+
+
+
+
+==	I)   Introduction
+============================================================================
+
+Smafe utilizes the whidespread autoconf/automake toolchain. There are, however, 
+a number of external libraries that are used by Smafe and that must be installed
+before configuring and making the application.
+
+
+
+
+==	II)  Dependencies
+============================================================================
+
+(Note: also edit misc/misc-deploy/INSTALL accordingly)
+
+--	a) Libraries
+----------------------------------------------------------------------------
+
+* argtable (>= 9-1) - A library for parsing GNU style command line arguments
+
+* boost-filesystem, boost-serialization, boost-smartptr, boost-system (>= 1.47 )
+	Also boost libs with a version < 1.47 will probably work but the tests will
+	 probably fail (resource files have been created with 1.47 version) 
+
+* Intel Performance Primitives (IPP) (>= 5.3.4)
+
+* mpg123 (>=1.10.1)
+
+* postgres / libpq (>= 8.3)
+ 
+* crypto++ (>= 5.5.2)
+
+
+--	b) Other
+----------------------------------------------------------------------------
+
+To perform the automake/autoconf steps you need these tools:
+* automake (version?)
+* autoconf (2.61)
+* libtool (..)
+* to execute the unit tests: cppunit
+
+To process file formats other than wav and mp3:
+* ffmpeg
+
+
+
+==	III) Autoreconf / Configure / Make
+============================================================================
+
+
+--	a) Autoreconf
+----------------------------------------------------------------------------
+
+From checkout root directory execute:
+
+# autoreconf -f
+
+Note that you use -f (--force) to overwrite macros which represent the svn revision. If you do not specify that switch the binaries will not show the correct version number (but the revision number when that m4 macro was committed)
+
+
+--	b) Configure
+----------------------------------------------------------------------------
+
+Configure has to be executed from the build directory:
+
+# cd build
+# ../configure
+
+Configure accepts a bunch of parameters. Please run
+
+# ../configure --help 
+
+to see an up-to-date list and a short description.
+
+The most important are:
+
+  --disable-checkpkgversion
+                          disable check of versions via package manager
+                          
+                          Used on Mac (TODO)
+                          
+                         
+  --enable-debug          enable debug data generation (default=no)
+  							
+  							Enables building with debug symbols enabled. Used for development and debugging. Not for packages that ship to customer.
+  
+  
+  --disable-deploy        do NOT build version ready for deployment (default
+                          ... deploy version built)
+                          
+  			              	Defines whether you want to build the internal version of Smafe that has all features and admin parameters.
+  			              	Or the "reduced" version that will be shipped to customers. Usually you do not have to specify the parameter manually because you can use the helper script mkdeploy to create a deploy package.
+
+
+
+
+
+--	c) Make
+----------------------------------------------------------------------------
+
+# make
+
+Available make targets:
+
+(default): 	default compile
+check		perform tests
+install		perform install
+clean		clean build dir
+
+
+--	d) Sequence of commands (summarized)
+----------------------------------------------------------------------------
+
+autoreconf
+cd build
+../configure
+make
+
+
+
+==	IV)  Tests
+============================================================================
+
+If cppunit is installed you can execute the automatic tests. Both unit and 
+functional tests are included.
+
+From the build directory run
+
+# make check
+
+Note that some tests assume that postgres is up and running.
+
+
+
+==	V)   Platform specific issues
+============================================================================
+
+
+--	a) Ubuntu/Mint
+----------------------------------------------------------------------------
+
+On Ubuntu 8.10 you can install most libraries via the package manager:
+
+sudo apt-get install automake libtool libpq-dev postgresql-server-dev-8.3 postgresql-client-8.3 libargtable2-dev libboost-filesystem1.35-dev libboost-serialization1.35-dev libcppunit-dev pkg-config libcrypto++-dev
+
+For IPP there is a Linux installer available.
+
+Libmpg123 1.10.1 can be downloaded as tar ball. "Make install" it. Set the _FILE_OFFSET_BITS to 64, otherwise you might get undefined reference to mpg123_open_64 errors during linking.
+# wget http://downloads.sourceforge.net/project/mpg123/mpg123/1.10.1/mpg123-1.10.1.tar.bz2?use_mirror=switch
+# tar xfj mpg123-1.10.1.tar.bz2
+# cd mpg123-1.10.1
+# export CPPFLAGS=-D_FILE_OFFSET_BITS=64
+# ./configure
+# make
+# sudo make install
+
+On Ubuntu 8.04 the boost libraries must be compiled from source. Follow the simple instructions on 
+http://www.boost.org/doc/libs/1_35_0/more/getting_started/unix-variants.html#easy-build-and-install
+
+Note: configure expects the boost shared object files to be named like libboost_filesystem{-mt}.so (-mt is optional).
+
+If the make process creates files a la libboost_system-gcc42-mt.so you can create symlinks named as expected.
+
+# ln -s libboost_system-gcc42-mt.so libboost_filesystem-mt.so
+
+
+On Ubuntu 9.10 / Mint Helena you can install most libraries via the package manager:
+
+sudo apt-get install automake libtool automake libccpunit-dev libargtable2-0 libargtable2-dev  libpq-dev postgresql-server-dev-8.3 postgresql-client-8.3 pkg-config libcrypto++-dev
+
+For IPP there is a Linux installer available.
+
+Libmpg123 1.10.1 can be downloaded as tar ball. "Make install" it. (see note above Ubuntu 8.04)
+
+The boost libraries must be compiled from source. 
+
+=1.47=
+./bootstrap.sh --with-libraries=serialization,system,filesystem,date_time --prefix=/home/ewald/code/libs/boost_1_47_0
+./b2 install
+
+=1.35=
+The boost libraries must be compiled from source. Follow the simple instructions on 
+http://www.boost.org/doc/libs/1_35_0/more/getting_started/unix-variants.html#easy-build-and-install
+
+# ./configure --with-libraries=serialization,filesystem,system
+
+NOTE: boost 1.35 and gcc 4.4 issue!
+See https://svn.boost.org/trac/boost/ticket/2069 and https://svn.boost.org/trac/boost/changeset/48960
+Steps: 
+- download  patch file from <https://svn.boost.org/trac/boost/raw-attachment/ticket/2069/mpl.patch>
+- go to directory .../boost_1_35_0
+- do a "patch -p0 < {patch-file}"
+
+Note: configure expects the boost shared object files to be named like libboost_filesystem{-mt}.so (-mt is optional).
+
+If the make process creates files a la libboost_system-gcc42-mt.so you can create symlinks named as expected.
+
+# ln -s libboost_system-gcc42-mt.so libboost_filesystem-mt.so
+
+
+
+
+
+
+--	b) Mac
+----------------------------------------------------------------------------
+
+
+todo
+
+
+--	c) Windows with MinGW
+----------------------------------------------------------------------------
+
+
+todo
+
+
+
+==	VI)  Database setup
+============================================================================
+
+Use the script smafestore/recreatedb.sh that is to be called from the directory smafestore.
+
+Usage: recreatedb.sh [<db name>] [force]
+
+The default database name is 'smafestore'. The second parameter force surpresses any questions to the user.
+
+Example: create new empty database test
+
+$ cd smafestore
+$ ./recreatedb.sh test force
+$ cd ..
+
+
+The new database does not yet contain any configuration.
+
+If compiled in non-deploy mode, smafewrapd can create a sql script from a options text file. This sql script is then to be inserted into the new db.
+
+Example (assumption: compiled with --disable-deploy, postgres environment variables set accordingly):
+
+$ smafewrapd/smafewrapd --config options.opt > tmp-config.sql
+$ psql test < tmp-config.sql
+$ rm tmp-config.sql
+
+
+
+
+

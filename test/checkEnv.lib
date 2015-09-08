@@ -1,0 +1,281 @@
+# checkEnv.lib
+# Note no #!/bin/sh as this should not spawn 
+# an extra shell. It's not the end of the world 
+# to have one, but clearer not to.
+#
+
+
+# expects $TESTLOGFILE to be set
+checkEnv()
+{
+  #check if PGHOST is set. If not, set it to localhost
+  if [ -z $PGHOST ]; then
+    export PGHOST=localhost
+  fi
+  echo "PGHOST=$PGHOST"
+  #check if name of testdb was set
+  if [ -z $TESTDATABASE ]; then
+    #try a default testdb 
+    export TESTDATABASE=testcasedb
+  fi
+  echo "using database to test: " $TESTDATABASE >> $TESTLOGFILE 2>&1
+  
+  # check verbose param
+  #if $SMAFETESTPARAMV is set, use this value, otherwise use 1
+  if [ -z $SMAFETESTPARAMV ]; then
+    #try a default testdb 
+    export SMAFETESTPARAMV=1
+  fi
+  
+  # check executable prefix (path) 
+  if [ -z $SMAFETESTEXECPREFIX ]; then
+     #try a default testdb 
+     export SMAFETESTEXECPREFIX=../build/
+  fi
+  echo "using executable prefix/path: " $SMAFETESTEXECPREFIX " -- set \$SMAFETESTEXECPREFIX to change " >> $TESTLOGFILE 2>&1
+  
+  
+  #### check system
+  # (this section occurs also in misc/mkdeploy.sh) (without     $TESTLOGFILE 2>&1)
+  SMAFESETUP_UNAME_S=$(uname -s)
+  if [ x"$SMAFESETUP_UNAME_S" == xLinux ]; then
+	#echo "Linux detected."
+	echo "Linux detected. uname -s was $SMAFESETUP_UNAME_S" >> $TESTLOGFILE 2>&1  
+	SMAFESETUP_ISLINUX=1
+	SMAFESETUP_ISMAC=
+	SMAFESETUP_ISWIN=
+  elif [ x"$SMAFESETUP_UNAME_S" == xDarwin ]; then
+	#echo "Mac detected."
+	echo "Mac detected. uname -s was $SMAFESETUP_UNAME_S" >> $TESTLOGFILE 2>&1  
+	SMAFESETUP_ISLINUX=
+	SMAFESETUP_ISMAC=1
+	SMAFESETUP_ISWIN=
+  else
+	echo "Unknown system: $SMAFESETUP_UNAME_S"
+	exit 1
+fi
+  
+}
+
+
+
+
+###############################################################
+## Saves the values of PG env vars
+## Variables expected:
+## 		- (none)
+##
+## Variables changed:
+##		- PGUSER_BAK
+##		- PGPASSWORD_BAK
+##
+## Filesystem changes:
+##		- (none)
+##
+## Database changes:
+##		- (none)
+
+savePGEnv()
+{
+  export PGUSER_BAK=$PGUSER
+  export PGPASSWORD_BAK=$PGPASSWORD
+  
+  echo "pg user saved"
+    echo "postgres user: " $PGUSER_BAK 
+   echo "postgres pwd: " $PGPASSWORD_BAK 
+}
+
+
+
+###############################################################
+## Sets the PG env vars accordingly
+## Variables expected:
+## 		- PGUSERSET			which set of var values to use: either "user" or "admin"			eg admin
+##
+## Variables changed:
+##		- PGUSER
+##		- PGPASSWORD
+##
+## Filesystem changes:
+##		- (none)
+##
+## Database changes:
+##		- (none)
+
+setSmafePGUser()
+{
+	if [ $PGUSERSET == "user" ]; then
+	  export PGUSER=testsmurf
+	  export PGPASSWORD=papa
+	else
+	  export PGUSER=testsmafeadmin
+	  export PGPASSWORD=FEP13pipers
+	fi
+
+  echo "using postgres user: " $PGUSER 
+   echo "using postgres pwd: " $PGPASSWORD 
+  
+  # > $TESTLOGFILE 2>&1
+}
+
+
+
+
+
+###############################################################
+## # restores the PG env ars
+## Variables expected:
+##		- PGUSER_BAK
+##		- PGPASSWORD_BAK
+##
+## Variables changed:
+##		- PGUSER
+##		- PGPASSWORD
+##
+## Filesystem changes:
+##		- (none)
+##
+## Database changes:
+##		- (none)
+
+restorePGEnv()
+{
+  export PGUSER=$PGUSER_BAK  
+  export PGPASSWORD=$PGPASSWORD_BAK
+  echo PG environment variables restored:
+  echo "using postgres user: " $PGUSER 
+	echo "using postgres pwd: " $PGPASSWORD
+}
+
+
+
+###############################################################
+## Inserts addfile jobs into the db
+## Variables expected:
+## 		- INPATH			the path to look for files						eg ../test/resources/testsmall*.mp3
+##		- TESTDATABASE		the database name								eg testcasedb
+##		- TESTLOGFILE		the log file
+##
+## Variables changed:
+##		- x					highest index in array (index starts from 1!)	eg 4 if four files processed
+##		- TESTWRAPFILE[x]	complete filename incl path (can be relative)
+##		- TESTWRAPFILE_NOPATH[x] filename without path (basename)
+##		- TESTWRAPFILE_CP[x] complete filename of copy of file
+##		- TESTWRAPFILE_DEST[x] path (destination) - actually constant  
+##		- TESTWRAPFILE_DEST_FILE[x] complete filename where file after processing is expected
+##		- testResultj[x]	return value of psql command (0 if no error, != 0 otherweise)
+##
+## Filesystem changes:
+##		- File TESTWRAPFILE[x] has been copied to TESTWRAPFILE_CP[x]
+##		- Log messages have been written to $TESTLOGFILE
+##
+## Database changes:
+##		- A record has been inserted into smafejob_addfile: TESTWRAPFILE_CP[x] to be processed
+
+doFileAdd()
+{
+x=1
+# begin for
+for i in  ${INPATH[*]}; do 
+echo file to be added: $i >> $TESTLOGFILE 2>&1
+
+TESTWRAPFILE[x]=$i
+# this is advanced bash magic: basically it extracts the basename of a path+file expression
+TESTWRAPFILE_NOPATH[x]=${TESTWRAPFILE[x]##*/}
+TESTWRAPFILE_EXT=${TESTWRAPFILE[x]##*.}
+TESTWRAPFILE_CP[x]=${TESTWRAPFILE[x]}.fortesting.$TESTWRAPFILE_EXT
+echo  ${TESTWRAPFILE_CP[x]} >> $TESTLOGFILE 2>&1
+TESTWRAPFILE_DEST[x]=/tmp
+TESTWRAPFILE_DEST_FILE[x]=${TESTWRAPFILE_DEST[x]}/${TESTWRAPFILE_NOPATH[x]}.fortesting.$TESTWRAPFILE_EXT
+echo ${TESTWRAPFILE_DEST_FILE[x]}  >> $TESTLOGFILE 2>&1
+# copy file so that it can be deleted later
+cp ${TESTWRAPFILE[x]} ${TESTWRAPFILE_CP[x]} >> $TESTLOGFILE 2>&1
+# insert add jobs
+# uuidgen generates a guid
+# package: libuuid1 (debian)
+#psql -h localhost -d $TESTDATABASE -c "insert into smafejob_addfile (collection_name, file_uri, external_key, guid) VALUES('testcollection', '${TESTWRAPFILE_CP[x]}', 'ext_key with ''single quotes'' and ${TESTWRAPFILE_CP[x]} and $x', '$(uuidgen)');"   >> $TESTLOGFILE 2>&1
+# we use the file name as guid
+psql -d $TESTDATABASE -c "insert into smafejob_addfile (collection_name, file_uri, external_key, guid) VALUES('testcollection', '${TESTWRAPFILE_CP[x]}', 'ext_key with ''single quotes'' and ${TESTWRAPFILE_CP[x]}', '${TESTWRAPFILE_CP[x]}');"   >> $TESTLOGFILE 2>&1
+testResultj[x]=$?
+
+# increse counter
+let x++
+done
+# end for
+# decrease counter for one
+let x--
+}
+
+
+
+###############################################################
+## Checks if files have been moved appropriatly and possibly deletes them
+## Variables expected:
+##		- x					highest index in array (index starts from 1!)	eg 4 if four files processed
+##		- TESTWRAPFILE[i]	complete filename incl path (can be relative)
+##		- TESTWRAPFILE_NOPATH[i] filename without path (basename)
+##		- TESTWRAPFILE_CP[i] complete filename of copy of file
+##		- TESTWRAPFILE_DEST[i] path (destination) - actually constant  
+##		- TESTWRAPFILE_DEST_FILE[i] complete filename where file after processing is expected
+##		- TESTLOGFILE		the log file
+##		- MAKECLEAN			if "yes" the files are deleted even if there is a problem, otherweise
+##								the files are kept if thre is a problem 
+##
+## Variables changed:
+##		- testResultcheck	return value: 1 if a problem occured with at least one file, 0 otherwise
+##
+## Filesystem changes:
+##		- Files TESTWRAPFILE_DEST_FILE[i] and TESTWRAPFILE_CP[i] are deleted
+##		- Log messages have been written to $TESTLOGFILE
+##
+
+doFileCleanup() 
+{
+# post processing: check if files are moved
+testResultcheck=0
+
+# check if seq is present 
+# because on Linux systems we want to use seq,  but on Mac OSX we use "jot"
+if which seq &> /dev/null; then
+  SEQ=`seq 1 $x`
+else
+  SEQ=`jot $x 1`
+fi
+
+for i in $SEQ; do 
+
+echo $i: checking if file ${TESTWRAPFILE_CP[i]} has been moved.   >> $TESTLOGFILE 2>&1 
+
+
+# check that file is moved
+if [ ! -f "${TESTWRAPFILE_CP[i]}" -a -f "${TESTWRAPFILE_DEST_FILE[i]}" ]
+then
+
+	# clean up
+	rm -f -- "${TESTWRAPFILE_DEST_FILE[i]}"   >> $TESTLOGFILE 2>&1
+	rm -f -- "${TESTWRAPFILE_CP[i]}"		  >> $TESTLOGFILE 2>&1
+
+else
+	if test x"$MAKECLEAN" = x"yes"; then
+
+		# clean up
+		rm -f -- "${TESTWRAPFILE_DEST_FILE[i]}"   >> $TESTLOGFILE 2>&1
+		rm -f -- "${TESTWRAPFILE_CP[i]}"			  >> $TESTLOGFILE 2>&1
+		echo "cleaned up"  							  >> $TESTLOGFILE 2>&1
+	
+	else
+
+		echo "Either ${TESTWRAPFILE_CP[i]} exists (and should not) OR  ${TESTWRAPFILE_DEST_FILE[i]} does not exist (but should)."     >> $TESTLOGFILE 2>&1
+		echo "Note that no cleaning up is done so you can check for yourself what is the problem. Cleaning up is done at the very beginning of this test, though."     >> $TESTLOGFILE 2>&1
+	
+	fi
+
+	testResultcheck=1
+fi
+
+
+
+done 
+}
+
+

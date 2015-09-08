@@ -1,0 +1,30 @@
+<phpunit>
+  <testsuites>
+    <!-- uncomment the templates to check if phpunit works  -->
+    <!-- <testsuite name="phpUnit Tests templates">
+      <directory>phpunittests_templates</directory>
+    </testsuite> -->
+    <!-- <testsuite name="simple smintapi phpUnit Tests">
+      <directory>phpunittests</directory>
+    </testsuite> -->
+    
+    <testsuite name="smint_api_standard">
+      <file>phpunittests/VersionTest.php</file>
+      <file>phpunittests/ExternalKeyTest.php</file>
+      <file>phpunittests/WrongContentTypeTest.php</file>
+      <!-- <file>phpunittests/</file> -->
+    </testsuite>
+
+    <testsuite name="smint_api_add_delete">
+      <file>phpunittests/AddUrlTest.php</file>
+      <file>phpunittests/DeleteTest.php</file>
+      <!-- <file>phpunittests/</file> -->
+    </testsuite>
+    
+    <testsuite name="smint_api_query">
+      <file>phpunittests/SimpleQueryTest.php</file>
+      <!-- <file>phpunittests/</file> -->
+    </testsuite>
+    
+  </testsuites>
+</phpunit>

@@ -1,0 +1,45 @@
+--------------------------------------------------------------------
+----	README
+--------------------------------------------------------------------
+----	Spectralmind Gmbh
+----	(c) 2008-2012
+----	support@spectralmind.com
+--------------------------------------------------------------------
+
+
+--	Introduction
+----------------------------------------------------------------------------
+
+Smafe is the core of Spectralmind's music analysis software package. 
+
+This version of Smafe uses PostgreSQL for data persistance which is assumed to be installed.
+
+
+
+--	De-/Installation
+----------------------------------------------------------------------------
+
+Please refer to the text file INSTALL.
+
+
+
+--	Administration
+----------------------------------------------------------------------------
+
+Smafe has two executables that are run as daemons: smafewrapd and smafedistd.
+
+Once the init script is installed in /etc/init.d (see INSTALL), the daemons can be controled with
+
+$ /etc/init.d/smafed {start|stop|status|restart|force-reload}
+
+The commands confirm to the Debian Policy Manual, with 'force-reload' having the same effect as 'restart'.
+
+'status' command gives you information whether the daemon(s) are running, their PIDS, and open tasks of both daemons. Note that the open tasks are read from the most recent log file from the folder where Smafe has been installed. This heuristic generally works but might also occasionally use the wrong log file.
+
+'start' will start the daemons if they are not running. The init script will never attempt to start a second process of a daemon that is already running.
+
+  
+
+
+
+

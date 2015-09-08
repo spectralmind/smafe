@@ -1,0 +1,33 @@
+<?php
+require_once 'PHPUnit/Framework.php';
+ 
+class SimpleTestTemplate extends PHPUnit_Framework_TestCase
+{
+  
+  protected function setUp()
+  {
+    // place setup here
+  }
+
+  protected function tearDown()
+  {
+    // place teardown here
+  }
+  
+    public function testPushAndPop()
+    {
+        $stack = array();
+        $this->assertEquals(0, count($stack));
+ 
+        array_push($stack, 'foo');
+        $this->assertEquals('foo', $stack[count($stack)-1]);
+        $this->assertEquals(1, count($stack));
+ 
+        $this->assertEquals('foo', array_pop($stack));
+        $this->assertEquals(0, count($stack));
+        
+        // for more assert methods see: 
+        // http://www.phpunit.de/manual/current/en/api.html#api.assert
+    }
+}
+?>

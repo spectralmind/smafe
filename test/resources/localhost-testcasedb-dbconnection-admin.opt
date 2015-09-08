@@ -1,0 +1,5 @@
+--dbhost=localhost
+--dbport=5432
+--dbname=testcasedb
+--dbuser=testsmafeadmin
+--dbpwd=FEP13pipers

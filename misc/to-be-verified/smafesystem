@@ -1,0 +1,141 @@
+#!/bin/bash
+######
+# Spectralmind
+# preliminary version of an example run script
+# Wolfgang Jochum, Aug 2010
+######
+# updated by Ewald Peiszer, Dec 2010: other path structure
+######
+# updated by Ewald Peiszer, Jan 2011: make it a nice little Debian style init script
+
+
+
+###############################################
+#parse parameter
+###############################################
+
+# if less than 1 argument is provided give usage
+if [ $# -lt 1 ]; then
+  echo "USAGE: $0 {start|stop|restart|force-reload}"
+  exit 2
+fi
+
+case "$1" in
+'start')
+	STOPSERVICE=0
+	STARTSERVICE=1
+;;
+'stop')
+	STOPSERVICE=1
+	STARTSERVICE=0
+;;
+'restart'|'force-reload')
+	STOPSERVICE=1
+	STARTSERVICE=1
+;;
+*)
+	echo "Error: argument '$1' not supported" >&2
+    exit 3
+;;
+esac
+
+
+#################################################
+#subs
+#################################################
+
+###############################################################
+## # Check for running daemon
+## Variables expected:
+##		- checkRunningDaemon_STRING
+##
+## Variables changed:
+##		- daemonPID
+##
+## Filesystem changes:
+##		- (none)
+##
+
+checkRunningDaemon()
+{
+	daemonPID=$(ps aux | grep $checkRunningDaemon_STRING | grep -v grep | awk '{print $2}')
+}
+
+
+
+#####################################################
+#main work
+#####################################################
+
+
+if [ $STOPSERVICE -eq 1 ] ; then
+        echo "WARNING: stopping Daemons now."
+
+		checkRunningDaemon_STRING=smafewrapd
+		checkRunningDaemon
+		
+		if [ ${#daemonPID} -gt 0 ]; then
+                echo "INFO: stopping smafewrapd. We have to wait until the current job is finished."
+                while [ ${#daemonPID} -gt 0 ]; do
+                        kill $daemonPID
+                        sleep 1
+                        echo "."
+						checkRunningDaemon
+                done
+        fi
+        
+        checkRunningDaemon_STRING=smafedistd
+		checkRunningDaemon
+
+        if [ ${#daemonPID} -gt 0 ]; then
+                echo "INFO: stopping smafedistd.  We have to wait until the current job is finished."
+                while [ ${#daemonPID} -gt 0 ]; do
+                        kill $daemonPID
+                        sleep 1
+                        echo "."
+                        checkRunningDaemon
+                done
+        fi
+        
+fi # if [ $STOPSERVICE -eq 1 ] ;
+
+######
+# check for running deamons and start if not running
+######
+
+
+if [ $STARTSERVICE -eq 1 ]; then
+  testdistdDaemonrunning=$(ps aux |grep smafedistd  |grep -v grep  |  wc -l)
+  # contains number of lines with that id.
+  if [ $testdistdDaemonrunning -eq 0 ]; then
+        echo "INFO: smafedistd seems not be running."
+        echo "INFO: starting smafedistd ..."
+        bin/smafedistd.sh --jobs --dbconf=config/smafedbconn-localhost-smafedb-smafeuser.opt --id=smafedbdist
+  fi
+  checkRunningDaemon_STRING=smafedistd
+	checkRunningDaemon
+  if [ -z $daemonPID ]; then
+        echo "ERROR: smafedistd could not be started !!!"
+  else
+        echo "smafedistd Daemon seems to be running with PID: $daemonPID"
+  fi
+
+
+
+  testwrapDaemonrunning=$(ps aux |grep smafewrapd  |grep -v grep  |  wc -l)
+  # contains number of lines with that id.
+  if [ $testwrapDaemonrunning -eq 0 ]; then
+        echo "INFO: smafewrapd seems not be running"
+        echo "INFO: starting smafewrapd ..."
+        bin/smafewrapd.sh --dbconf=config/smafedbconn-localhost-smafedb-smafeuser.opt --id=smafedbwrap
+  fi
+
+   checkRunningDaemon_STRING=smafewrapd
+	checkRunningDaemon
+  if [ -z $daemonPID ]; then
+        echo "ERROR: smafewrapd could not be started !!!"
+  else
+        echo "smafewrapd Daemon seems to be running with PID: $daemonPID"
+  fi
+
+fi # if [ $STARTSERVICE -eq 1 ]; then

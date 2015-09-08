@@ -1,0 +1,42 @@
+-------
+- How To:  
+-------
+to test the server setup the api on your web server, 
+
+1) configure 
+- test/test.ini 
+
+2) run the tests
+- cd test
+- phpunit 
+
+
+NOTE: These tests use the live-database and leave it dirty! So do not invoke the phpunit tests on a non-empty database!
+
+some test depend on PHPUNIT see http://www.phpunit.de/manual/current/en/installation.html for installation details. current Version of PHPUNIT required: 3.4
+some test depend on cURL see for installation details: http://www.php.net/manual/en/curl.installation.php
+curl installation on Ubuntu (> 10.04):  sudo apt-get install curl php5-curl
+
+
+-------
+- CURRENT ISSUES:
+-------
+
+- AddUrlTest fails because of Smafe API semantic change.
+- ...
+- "Advanced tests" are not executed since orchestration with daemons is difficult and/or impossible.
+
+
+-------
+- FAQ: 
+-------
+
+- phpunit is not working -> check if version of phpunit is high enough !
+
+- curl not found -> Ubuntu: sudo apt-get install curl php5-curl
+
+- exception test.log can't be opened for writing -> the test log needs to have write access for current user ! 
+
+- exception api.log can't be opened for writing -> the test log needs to have write access for current user ! 
+
+- exception wrong user -> might not be directly related to the test, since the api does not support users (yet). check config/smintapi.ini 

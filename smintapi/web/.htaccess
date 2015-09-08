@@ -1,0 +1,3 @@
+RewriteBase /smintapi
+RewriteEngine on
+RewriteRule ^(.*)$ smintapi.php [QSA,L]

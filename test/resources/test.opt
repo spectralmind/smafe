@@ -1,0 +1,84 @@
+#Config file for tests
+
+# You can include comments like this
+# Note that the # must be in the first column of the line!
+--skipin
+1
+--skipout
+1
+--stepwidth
+2
+--returnSegmentFeatures
+1
+--transformDecibel
+1
+--transformSone
+1
+--modAmplLimit
+60
+--bIncludeDC
+0
+--shNumBarkBands
+24
+# do not change (testDistd expects 7 fv types)
+--bExtractRP
+1
+--bExtractRH
+1
+--bExtractSSD
+1
+--bExtractTRP
+0
+--bExtractTRH
+1
+--bExtractTSSD
+1
+--bExtractTIMEDOM
+1
+--bExtractSPECTRAL
+1
+--bFlucSW
+1
+--bBlurring1
+0
+--bBlurring2
+0
+# normalize (for identification)
+#--normalizeFFTEnergy
+#1
+--codebook=<none>
+--topk=100
+# verbose
+--verbosity
+1
+# dist types
+# do not change (testDistd)
+--disttypes
+1
+--disttypes
+2
+--disttypes
+3
+# do not change
+# empty means: do not move file
+# - means: delete file
+--filedest=/tmp/
+# do not change
+# if you change the password, also the test_limit_reached.opt.sql has to be adapted (limit should be 4 there)
+--passphrase=supersecret
+# do not change (testWrap.sh expects a limit of 5)
+--limittrackscount=5
+# do not change (testLic.sh expects a trial period of <= 5)
+--limittrialdays=5
+# do not change (testLic.sh expects a hard date limit <= 20 years in future)
+--limitharddate=2021-03-16
+#--help
+# These are additional command line parameters for the daemons
+# Fix parameters:
+#	- smafewrapd: --dbconf=<dbfile> (will be replaced at smafesetup.sh)
+#	- smafedistd: --jobs --dbconf=<dbfile> (will be replaced at smafesetup.sh)
+# the rest of the line after the first space is taken and written to smafed.conf
+###_smafewrapd-params --id=smafedbwrap
+###_smafedistd-params --id=smafedbdist
+
+

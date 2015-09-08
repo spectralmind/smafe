@@ -1,0 +1,61 @@
+; Config file for live calc situation
+; specifically customer demo
+; Comments start with ';', as in php.ini
+
+;
+; basic database setup
+;
+[database]
+dbname                = "3a"
+dbhost                = "localhost"
+dbuser                = "smurf"
+dbpassword            = "papa"
+;
+; advanced database setup
+;
+
+[query]
+queryDefault          = 10;       // used if no count is given
+queryLimit            = 0;        // maximum count
+defaultFVTypeid       = 1;        // used if no ftv is given 
+defaultDSTypeid       = 1;        // used if no dst is given
+distanceValues        = false;    // server default behavior if distance values should be included in the result
+externalKeys          = false;    // server default behavior if external_keys should be included in the result
+
+[result] 
+returnExternalIds     = true;       // if true external_ids will be returned. ids are the external representation of the internal external_key values. e.g. including a .mp3 ending
+normalizationconstant = 250;        // all distances will be devided by this constant; no value greater than 1 will be returned.
+precision             = 5;          // defines the precision of the returned distance value
+returnAllValues       = false;      // if set to false no values (and keys) will be returned for distancevalues greater than $normalizationconstant
+
+;
+; below are configuration settings you should only change if you understand their impact 
+;
+
+[logging]
+logLevel              = ALL                           ; one of (in order): ALL, DEBUG, INFO, WARN, ERROR, FATAL, OFF
+
+
+[liveapi]
+livehost		= localhost			; the host where the smafedistd is running
+liveport		= 1213				; port where smafedistd is listening
+liveclient		= smafewrapd				; path of client for live calc
+assumedmaxdist		= 600				; assumed maximal distance
+
+; set the feature vector type id in the section [query], defaultFVTypeid
+
+[known_api_methods]                 ;add method and Class that will handle the request, class needs to implement the RestService.php class
+track/match_frame     = "TrackServiceLive";
+version               = "VersionService";
+
+[xml] 
+rootnode              = "<?xml version='1.0' encoding='UTF-8'?><smint></smint>"               ;use single instead of double quotes !!! 
+
+[databaseconstants]
+defaultCollection     = "_d"
+defaultRemovedCollection     = "_r"
+
+
+
+ 
+

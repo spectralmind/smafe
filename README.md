@@ -31,10 +31,10 @@ Spectralmind ceased operations as of September 2015 and published its software s
 
 Spectralmind's open source software is comprised of four repositories:
 
-* [SEARCH by Sound Platform a.k.a. Smafe](https://www.github.com/tbd)
-* [SEARCH by Sound Web Application a.k.a. Smint](https://www.github.com/tbd)
-* [Sonarflow iOS App](https://www.github.com/tbd)
-* [Sonarflow Android App](https://www.github.com/tbd)
+* [SEARCH by Sound Platform a.k.a. Smafe](https://www.github.com/spectralmind/smafe)
+* [SEARCH by Sound Web Application a.k.a. Smint](https://www.github.com/spectralmind/smint)
+* [Sonarflow iOS App](https://www.github.com/spectralmind/sonarflow-ios)
+* [Sonarflow Android App](https://www.github.com/spectralmind/sonarflow-android)
 
 ### Resources
 

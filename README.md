@@ -1,12 +1,14 @@
-# SEARCH by Sound Platform
+# SEARCH by Sound Platform: SMAFE + SMINT
 
 ## Introduction
 
 SEARCH by Sound takes any sample song and finds songs that sound similar to it.
+It includes SMAFE, the audio analysis and similartiy computation engine and SMINT API, to query for similar songs.
 
-It analyzes the audio content of a WAV or MP3 file and performs sound-similarity searches based on audio elements capturing timbre, tempo and rhythmic feel. It includes SMAFE, the Spectralmind Audio Feature Extractor, which is the core of Spectralmind's music analysis software package. 
+SMAFE is the Spectralmind Audio Feature Extractor, the core of Spectralmind's music analysis software package. 
+It analyzes the audio content of a WAV or MP3 file and performs sound-similarity searches based on audio elements capturing timbre, tempo and rhythmic feel. SMINT contains the REST API to add/query/delete similar sounding songs. 
 
-SEARCH by Sound and SMAFE are published under the MIT license (see LICENSE file in the same directory for the complete terms).
+SEARCH by Sound with SMAFE and SMINT are published under the MIT license (see LICENSE file in the same directory for the complete terms).
 
 The source code in this repository contains the following modules:
 * Feature Extraction / Analysis
@@ -21,7 +23,7 @@ Spectralmind was an innovative media technology company founded 2008 by a group 
 
 Thomas Lidy, Ewald Peiszer, Johann Waldherr and Wolfgang Jochum
 
-Spectralmind’s audio analysis and music discovery applications allow computers to hear music in a similar way as humans do and consequently to find and recommend music by its mere content. This technology is an enabler for solutions in media search, categorization and recommendation.
+Spectralmindâ€™s audio analysis and music discovery applications allow computers to hear music in a similar way as humans do and consequently to find and recommend music by its mere content. This technology is an enabler for solutions in media search, categorization and recommendation.
 
 In addition to the SEARCH by Sound Platform for audio content analysis, Spectralmind also created music discovery applications for Web, iOS and Android, foremost [Sonarflow] (http://www.sonarflow.com) (also see below).
 

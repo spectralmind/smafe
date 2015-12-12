@@ -66,44 +66,47 @@ AC_LANG([C++])
 
 # check compiler version 
 # g++ >= 4.2
-WANT_CXX_MAJOR_VERSION=4
-WANT_CXX_MINOR_VERSION=2
-AX_GXX_VERSION()
-AX_SPLIT_VERSION([$GXX_VERSION])
-if ( test "$AX_MAJOR_VERSION" -gt $WANT_CXX_MAJOR_VERSION ) || \
-   ( test "$AX_MAJOR_VERSION" -ge $WANT_CXX_MAJOR_VERSION &&  test "$AX_MINOR_VERSION" -ge $WANT_CXX_MINOR_VERSION ); then
-  AC_MSG_NOTICE([C++ compiler version is ${GXX_VERSION}. Need at least version ${WANT_CXX_MAJOR_VERSION}.${WANT_CXX_MINOR_VERSION}])
-else
+
+# EPEI: disable gcc version check (at least for Ubuntu 12.04 this leads to undefined macros
+
+#WANT_CXX_MAJOR_VERSION=4
+#WANT_CXX_MINOR_VERSION=2
+#AX_GXX_VERSION()
+#AX_SPLIT_VERSION([$GXX_VERSION])
+#if ( test "$AX_MAJOR_VERSION" -gt $WANT_CXX_MAJOR_VERSION ) || \
+#   ( test "$AX_MAJOR_VERSION" -ge $WANT_CXX_MAJOR_VERSION &&  test "$AX_MINOR_VERSION" -ge $WANT_CXX_MINOR_VERSION ); then
+#  AC_MSG_NOTICE([C++ compiler version is ${GXX_VERSION}. Need at least version ${WANT_CXX_MAJOR_VERSION}.${WANT_CXX_MINOR_VERSION}])
+#else
 # try to find newer compiler depending on host system
-    AC_MSG_NOTICE([C++ compiler version ${GXX_VERSION} is too old, trying to find newer version .... ])
-    case "${host_os}" in
-      *linux*)
-        ;;
-      *mingw32* | *win32*)
-        ;;
-      *darwin*)
-	    AC_MSG_NOTICE([setting CXX to g++-4.2 ])
-		CXX=g++-4.2
-        ;;
-    esac
-    AX_GXX_VERSION()
-	AX_SPLIT_VERSION([$GXX_VERSION])
-	if ( test "$AX_MAJOR_VERSION" -gt $WANT_CXX_MAJOR_VERSION ) || \
-	   ( test "$AX_MAJOR_VERSION" -ge $WANT_CXX_MAJOR_VERSION &&  test "$AX_MINOR_VERSION" -ge $WANT_CXX_MINOR_VERSION ); then
-	  AC_MSG_NOTICE([C++ compiler version is ${GXX_VERSION}. Need at least version ${WANT_CXX_MAJOR_VERSION}.${WANT_CXX_MINOR_VERSION}])
-	else
-		AC_MSG_ERROR([C++ compiler version is ${GXX_VERSION}. 
-                  Need at least version ${WANT_CXX_MAJOR_VERSION}.${WANT_CXX_MINOR_VERSION}.
+#    AC_MSG_NOTICE([C++ compiler version ${GXX_VERSION} is too old, trying to find newer version .... ])
+#    case "${host_os}" in
+#      *linux*)
+#        ;;
+#      *mingw32* | *win32*)
+#        ;;
+#      *darwin*)
+#	    AC_MSG_NOTICE([setting CXX to g++-4.2 ])
+#		CXX=g++-4.2
+#        ;;
+#    esac
+#    AX_GXX_VERSION()
+#	AX_SPLIT_VERSION([$GXX_VERSION])
+#	if ( test "$AX_MAJOR_VERSION" -gt $WANT_CXX_MAJOR_VERSION ) || \
+#	   ( test "$AX_MAJOR_VERSION" -ge $WANT_CXX_MAJOR_VERSION &&  test "$AX_MINOR_VERSION" -ge $WANT_CXX_MINOR_VERSION ); then
+#	  AC_MSG_NOTICE([C++ compiler version is ${GXX_VERSION}. Need at least version ${WANT_CXX_MAJOR_VERSION}.${WANT_CXX_MINOR_VERSION}])
+#	else
+#		AC_MSG_ERROR([C++ compiler version is ${GXX_VERSION}. 
+ #                 Need at least version ${WANT_CXX_MAJOR_VERSION}.${WANT_CXX_MINOR_VERSION}.
 
-                  You can try to 
-                  - tell configure what compiler to use e.g. configure CXX=g++-4.2
-                  - do the same thing in your enviroment before launching configure export env CXX=g++-4.2
-                  - update your compiler
-                
-
-])
-	fi
-fi
+#                  You can try to 
+#                  - tell configure what compiler to use e.g. configure CXX=g++-4.2
+#                  - do the same thing in your enviroment before launching configure export env CXX=g++-4.2
+#                  - update your compiler
+#                
+#
+#])
+#	fi
+#fi
 
 
 ##########################################################################

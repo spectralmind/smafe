@@ -366,7 +366,7 @@ AC_SUBST(BOOSTSUFFIX)
 	    #  -shared -fPIC
 	    # -R$INTEL_IPP_FOLDER/$IPP_SHAREDLIB_PATH
 #	    LDFLAGS=" -L$INTEL_IPP_FOLDER/$IPP_SHAREDLIB_PATH $IPP_LDFLAGS $LDFLAGS"  
-	    LDFLAGS=" -L$IPP_LDFLAGS $LDFLAGS"  
+	    LDFLAGS=" $IPP_LDFLAGS $LDFLAGS"  
 	      
 	    AC_CHECK_LIB([ippcore],[main],IPPSUFFIX=; [echo "found IPP IA32 Version ;-)"], IPPSUFFIX=em64t)
 	    AC_CHECK_LIB([ippcore$IPPSUFFIX],[main], [echo "found IPP em64t Version ;-)"], [echo "Can not find IPP libraries! This program needs the INTEL IPP libraries in order to work. Install libraries and set path."; exit 1])
